@@ -38,7 +38,7 @@ freepartition=$(fdisk -l |grep "Linux LVM"|awk '{print $1}')
 pvcreate $freepartition
 
 #volumegroup creation
-vgcreate  vg_data $freepartition
+vgcreate vg_data $freepartition
 
 #logical volume creation
 lvcreate --name data -l 100%FREE vg_data
