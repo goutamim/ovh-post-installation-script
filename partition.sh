@@ -40,11 +40,11 @@ vgcreate  vg_data $freepartition
 lvcreate --name data -l 100%FREE vg_data
 
 #creating file system of type ext4 
-echo y |mkfs.ext4  /dev/vg_data/data
+mkfs.ext4  /dev/vg_data/data -F
 
 #appending a line to a /etc/fstab file ,if it doesnt exist
-var=$(cat /etc/fstab|grep /dev/vg_data/data|wc -l)
-if [ $var -eq 0 ]
+grep vg_data /etc/fstab
+if [[ $? -ne 0 ]];
 then
 echo "/dev/vg_data/data       /data   ext4    errors=remount-ro,discard       0       1" >> /etc/fstab
 fi
