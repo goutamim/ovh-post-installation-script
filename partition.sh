@@ -9,6 +9,9 @@ sed -i -E  "s/^#?Port 22/Port 2022/g" /etc/ssh/sshd_config
 # Add "UseDNS no"
 sed -i -E  "s/^#?UseDNS no/UseDNS no/g" /etc/ssh/sshd_config
 
+#restart sshd service
+systemctl restart sshd
+
 #disk partition creation
 disks=$(lsblk -l | grep disk | awk '{print $1}')
 
