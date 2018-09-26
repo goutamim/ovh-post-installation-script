@@ -27,15 +27,15 @@ do
 	      start=${start_freespace::-1}
 	      #echo $start
 	      #creating partition on  disk
-	      (echo n; echo p; echo "$start"; echo " ";echo t;echo "";echo 8e;echo w) |fdisk /dev/$i
+	      (echo n; echo p; echo "$start"; echo " ";echo t;echo " ";echo 8e;echo w) |fdisk /dev/$i
       else
-	      (echo n; echo p; echo ""; echo "";echo "";echo t;echo 8e;echo w) |fdisk /dev/$i
+	      (echo n; echo p; echo " "; echo " ";echo " ";echo t;echo 8e;echo w) |fdisk /dev/$i
     fi
 done
 
 #physical volume creation 
-freepartiton=$(fdisk -l |grep "Linux LVM"|awk '{print $1}')
-pvcreate $freepartiton
+freepartition=$(fdisk -l |grep "Linux LVM"|awk '{print $1}')
+pvcreate $freepartition
 
 #volumegroup creation
 vgcreate  vg_data $freepartition
