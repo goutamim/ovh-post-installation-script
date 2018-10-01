@@ -20,7 +20,7 @@ lvdisplay |grep "LV Path"
 if [[ $? -eq 0 ]];
 then
         lvdisplay |grep "LV Path" | awk '{print $3}'|xargs umount
-        lvdisplay |grep "LV Path" | awk '{print $3}'|xargs lvremove -f
+        lvdisplay |grep "LV Path" | awk '{print $3}'|xargs lvremove -ff
 fi
 
 
@@ -28,7 +28,7 @@ fi
 vgdisplay |grep "VG Name"
 if [[ $? -eq 0 ]];
 then
-        vgdisplay |grep "VG Name"|awk '{print $3}'| xargs vgremove
+        vgdisplay |grep "VG Name"|awk '{print $3}'| xargs vgremove -ff
 fi
 
 
@@ -37,7 +37,7 @@ fi
 pvdisplay |grep "PV Name"
 if [[ $? -eq 0 ]];
 then
-        pvdisplay |grep "PV Name"|awk '{print $3}'|xargs pvremove
+        pvdisplay |grep "PV Name"|awk '{print $3}'|xargs pvremove -ff
 fi
 
 
