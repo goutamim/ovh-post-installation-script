@@ -1,0 +1,29 @@
+#!/usr/local/bin/bash
+
+touch result.txt
+echo "---------------------timezone,dns,port check---------------------" >> result.txt
+timedatectl | grep "Time" >> result.txt
+grep -e "\<Port\>" -e "UseDNS" /etc/ssh/sshd_config >>result.txt
+
+echo  "---------------------listing all the disks---------------------" >>result.txt
+lsblk -l | grep disk | awk '{print $1}' >> result.txt
+
+echo  "---------------------lvm partitions created---------------------" >> result.txt
+fdisk -l |grep "Linux LVM" >>result.txt
+
+echo "---------------------PV LV VG created---------------------" >>result.txt
+pvdisplay |grep "PV Name" >> result.txt
+vgdisplay |grep "VG Name" >> result.txt
+lvdisplay |grep "LV Name" >> result.txt
+
+echo "--------------------- data folder is created---------------------" >>result.txt
+find / -maxdepth 1 -type d -name data >> result.txt
+
+echo "--------------------- line added in  a /etc/fstab file ---------------------" >>result.txt
+grep vg_data /etc/fstab >> result.txt
+
+echo "---------------------vg mount---------------------" >>result.txt
+findmnt|grep vg_data >> result.txt
+
+cat result.txt
+rm result.txt
